@@ -8,27 +8,44 @@ const CartProductSchemma = mongoose.Schema({
         required: true,
         trim: true
     },
+
     details: {
         type: String,
         required: true,
         trim: true
     },
+
     knt: {
         type: String,
         trim: true
     },
+
     price: {
         type: Number,
         required: true,
         trim: true
     },
+    
     dateship: {
         type: Date,
         default: Date.now()
     },
+
     users: {
         type: Schemma.Types.ObjectId,
         ref: 'users',
+        required: true
+    } , 
+    
+    purchase : {
+        type: Schemma.Types.ObjectId,
+        ref: 'purchase',
+        required: true
+    } , 
+
+    product : {
+        type: Schemma.Types.ObjectId,
+        ref: 'products',
         required: true
     }
     
