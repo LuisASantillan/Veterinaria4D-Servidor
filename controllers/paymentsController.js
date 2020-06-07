@@ -1,6 +1,7 @@
 const  payment  = require('../models/ecommerce/ad-ecommerce/Payments');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
+const mongoose = require('../database');
 
 exports.addPayment = async (req, res) => {
     console.log(req.body);

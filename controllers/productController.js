@@ -1,6 +1,9 @@
 const product = require('../models/ecommerce/ad-ecommerce/Products');
+const category = require('../models/ecommerce/ad-ecommerce/Category');
+
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
+const mongoose = require('../database');
 
 
 // Agrega un Producto

@@ -1,7 +1,7 @@
 const  cartproduct  = require('../models/users/Users');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
-
+const mongoose = require('../database');
 
 // Usuario
 //Autenticar Usuaro

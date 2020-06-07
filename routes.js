@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
+const mongoose  = require('./database');
 
 //Controller Usuario
 const userController = require('./controllers/authController');

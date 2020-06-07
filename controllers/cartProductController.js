@@ -1,7 +1,7 @@
 const  cartproduct  = require('../models/ecommerce/ad-ecommerce/CartProducts');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
-
+const mongoose = require('../database');
 
 exports.addCardProduct =  async (req, res) => {
     console.log(req.body);
