@@ -31,3 +31,28 @@ exports.listCategory = async (req, res) => {
         return res.status(400).json({ msg: 'Hubo un error' });
     }
 };
+
+// Modifica una Categoria
+exports.editCategory = async (req, res) => {
+    try {
+
+        console.log(req.params.id)
+        // Validar ID
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(404).json({ msg: 'La Categoria No Existe' });
+        }
+        // Verificar que el Producto exista
+        let catmod = await category.findById(req.params.id);
+        if (!catmod) {
+            return res.status(404).json({ msg: 'La Categoria No Existe' });
+        }
+        // Editar 
+        catmod = await category.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+        res.json({ msg: 'La Categoria fue modificada', catmod});
+        
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ msg: 'Hubo un error.' });
+    }
+};

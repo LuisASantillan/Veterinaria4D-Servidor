@@ -118,6 +118,12 @@ router.get('/listCategory/',
     categoryController.listCategory
 );
 
+//EDITAR CATEGORIA
+router.put('/editCategory/:id',
+    //auth,
+    categoryController.editCategory
+);
+
 
 
 module.exports = router;
