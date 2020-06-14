@@ -124,6 +124,28 @@ router.put('/editCategory/:id',
     categoryController.editCategory
 );
 
+//COMPRA 
+//GUARDA UNA COMPRA
+router.post('/addPurchase',
+    /*auth,*/
+    [
+        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+    ]
+    , purchaseController.addPurchase
+);
+
+//LISTA UNA COMPRA
+router.get('/listPurchase',
+    //auth,
+    purchaseController.listPurchase
+);
+
+//EDITA UNA COMPRA 
+router.delete('/deletePurchase/:id',
+    //auth,
+    purchaseController.deletePurchase
+);
+
 
 
 module.exports = router;

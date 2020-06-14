@@ -14,8 +14,8 @@ const PurchaseSchemma = mongoose.Schema({
     },
     users: {
         type: Schemma.Types.ObjectId,
-        ref: 'users',
-        required: true
+        ref: 'users'
+        //required: true
     } 
     
 });

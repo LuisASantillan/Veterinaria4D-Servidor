@@ -3,30 +3,34 @@ const Schemma   = mongoose.Schema;
 // Definimos el Schema
 const PaymentsSchemma = mongoose.Schema({
 
-    numbercard: {
+    expiry: {
         type: String,
         required: true,
         trim: true
     },
-    dateexp: {
+    name: {
         type: String,
         required: true,
         trim: true
     },
-    codesec: {
+    cvc: {
         type: String,
         trim: true
     },
-    shipprice: {
+    number: {
         type: Number,
         required: true,
         trim: true
     },
     users: {
         type: Schemma.Types.ObjectId,
-        ref: 'users',
-        required: true
-    }
+        ref: 'users'
+        //required: true
+    } , 
+    datepayment: {
+        type: Date,
+        default: Date.now()
+    },
 
     
 });

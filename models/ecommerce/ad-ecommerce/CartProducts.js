@@ -39,14 +39,20 @@ const CartProductSchemma = mongoose.Schema({
     
     purchase : {
         type: Schemma.Types.ObjectId,
-        ref: 'purchase',
-        required: true
+        ref: 'purchase'
+        //required: true
+    } , 
+
+    payment :{
+        type: Schemma.Types.ObjectId,
+        ref: 'payments'
+        //required: true
     } , 
 
     product : {
         type: Schemma.Types.ObjectId,
-        ref: 'products',
-        required: true
+        ref: 'products'
+        //required: true
     }
     
 });
