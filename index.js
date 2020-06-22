@@ -9,7 +9,7 @@ const morgan   = require('morgan');
 const app = express();
 
 // Puerto de la App
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT || 4030 ;
 
 // Middlewares
 app.use(express.json()); // for parsing application/json

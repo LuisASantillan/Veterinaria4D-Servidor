@@ -14,6 +14,12 @@ const paymentsController = require('./controllers/paymentsController');
 const productController = require('./controllers/productController');
 const purchaseController = require('./controllers/purchaseController');
 
+//Controllers Shifts 
+const shiftsController = require('./controllers/shiftsController');
+const specieController = require('./controllers/specieController');
+const specialityController = require('./controllers/specialityController');
+
+
 
 
 //ROUTES USERS
@@ -145,6 +151,59 @@ router.delete('/deletePurchase/:id',
     //auth,
     purchaseController.deletePurchase
 );
+
+//SHIFTS 
+//AGREGA SHIFTS
+router.post('/addShifts',
+    /*auth,*/
+    [
+        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+    ]
+    ,shiftsController.addShifts
+);
+
+//LISTA SHIFTS
+router.get('/listShifts',
+    //auth,
+    shiftsController.listShifts
+);
+
+//LIST SHIFTS BY USR
+router.get('/listShiftsByUsr/:id',
+    //auth,
+    shiftsController.listShiftsByUsr
+); 
+
+//AGREGA SPECIES
+router.post('/addSpecie',
+    /*auth,*/
+    [
+        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+    ]
+    , specieController.addSpecie
+);
+
+//LISTA ESPECIES
+router.get('/listSpecie',
+    //auth,
+    specieController.listSpecies
+);
+
+//AGREGA SPECIALITY
+router.post('/addSpeciality',
+    /*auth,*/
+    [
+        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+    ]
+    , specialityController.addSpeciality
+);
+
+//LISTA ESPECIES
+router.get('/listSpeciality',
+    //auth,
+    specialityController.listSpecialitys
+);
+
 
 
 

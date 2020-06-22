@@ -1,7 +1,8 @@
-const  cartproduct  = require('../models/users/Users');
+const  user  = require('../models/users/Users');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const mongoose = require('../database');
+const jwt      = require('jsonwebtoken');
 
 // Usuario
 //Autenticar Usuaro
@@ -15,14 +16,14 @@ exports.auth = async (req, res) => {
         let users = await user.findOne({ email });
         if(!users){
             console.log('Email no válido.');
-            res.status(400).json({ msg: 'El email o contraseña no son válidos.'})
+            res.status(400).json({ msg: 'El email o contraseña no son válidos.' , success: false})
         }
 
         // Verificar la contraseña
         const passCorrecto = await bcryptjs.compare(password, users.password);
         if(!passCorrecto){
             console.log('Password no válido.');
-            res.status(400).json({ msg: 'El email o contraseña no son válidos.'})
+            res.status(400).json({ msg: 'El email o contraseña no son válidos.' , success: false})
         }
 
         // TODO OK
@@ -41,7 +42,7 @@ exports.auth = async (req, res) => {
             if(error) throw error;
         
             // Mensaje de confirmación
-            res.json({ users , token });
+            res.json({ users , token , success:true });
         });
         
     } catch (error) {

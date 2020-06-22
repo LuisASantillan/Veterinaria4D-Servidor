@@ -57,8 +57,6 @@ exports.listPurchase = async (req, res) => {
             res.json({data });
         }
     )
-
-    
 };
 
 
@@ -84,3 +82,5 @@ exports.deletePurchase = async (req, res) => {
         res.status(400).json({ msg: 'Hubo un error.' });
     }
 };
+
+
