@@ -18,7 +18,8 @@ const UserSchemma = mongoose.Schema({
     },
     isadmin: {
         type: Boolean,
-        trim: true
+        trim: true , 
+        default : false
     },
     Date: {
         type: Date,
