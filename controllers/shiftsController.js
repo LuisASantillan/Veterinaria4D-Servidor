@@ -37,7 +37,6 @@ exports.listShifts = async (req, res) => {
 //Listar Shifts Por Id
 exports.listShiftsByUsr =  async (req, res) => {
     try {
-
         
         // Controlar la categoria
         const users = await user.findById(req.params.id);

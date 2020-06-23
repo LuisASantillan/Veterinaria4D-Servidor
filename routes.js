@@ -146,7 +146,7 @@ router.get('/listPurchase',
     purchaseController.listPurchase
 );
 
-//EDITA UNA COMPRA 
+//DELETE COMPRA 
 router.delete('/deletePurchase/:id',
     //auth,
     purchaseController.deletePurchase

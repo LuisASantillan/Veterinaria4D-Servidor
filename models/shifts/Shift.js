@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schemma   = mongoose.Schema;
+const mongoose     = require('mongoose');
+const Schemma      = mongoose.Schema;
 const ShiftSchemma = mongoose.Schema({
 
     petname: {
@@ -29,6 +29,11 @@ const ShiftSchemma = mongoose.Schema({
     user:{
         type: Schemma.Types.ObjectId,
         ref: 'users' 
+    } , 
+    state:{
+        type:Boolean, 
+        trim: true, 
+        default: false
     }
     
 });
