@@ -90,11 +90,38 @@ exports.users = async (req, res) => {
             expiresIn: '1h'
         }, (error, token) => {
             if(error) throw error;
-            res.json({ msg: 'Usuario creado correctamente', token , users });
+            res.json({ msg: 'Usuario creado correctamente', token , users , success:true });
         })
     } catch (error) {
         console.error(error);
         res.status(400).json({ msg: 'Hubo un error'});
     }
 
+};
+
+
+// Modifica un Usuario
+exports.editusr = async (req, res) => {
+    try {
+        // Validar ID
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(404).json({ msg: 'El usuario no existe', success:false });
+        }
+        // Verificar que el Producto exista
+        let usrmod = await user.findById(req.params.id);
+        if (!usrmod) {
+            return res.status(404).json({ msg: 'El usuario no existe' , success:false });
+        }
+
+        const salt = await bcryptjs.genSalt(10);
+        req.body.password = await bcryptjs.hash(req.body.password, salt);
+        
+        usrmod = await user.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+        res.json({ msg: 'Usuario actualizado', usrmod , success:true});
+        
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ msg: 'Hubo un error.' });
+    }
 };

@@ -44,6 +44,15 @@ router.post('/auth/',
     , userController.auth
 );
 
+//EDITAR USUARIO
+router.put('/auth/:id',
+    [
+        check('email', 'El email es obligatorio.').not().isEmpty(),
+        check('password', 'El password es obligatorio.').not().isEmpty()
+    ]
+    , userController.editusr
+);
+
 
 //ROUTES PRODUCTS
 
