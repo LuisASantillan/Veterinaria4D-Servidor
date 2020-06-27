@@ -56,3 +56,24 @@ exports.editCategory = async (req, res) => {
         res.status(400).json({ msg: 'Hubo un error.' });
     }
 };
+
+
+exports.deleteCategory = async (req, res) => {
+    try {
+        // Validar ID
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(404).json({ msg: 'La Categoria no Existe' });
+        }
+        // Verificar que el Producto exista
+        let categorydel = await category.findById(req.params.id);
+        if (!categorydel) {
+            return res.status(404).json({ msg: 'La Categoria no Existe' });
+        }
+        // Eliminar
+        await categorydel.remove();
+        res.json({ msg: 'El categoria fue eliminado correctamente.', success: true });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ msg: 'Hubo un error.' , success:false });
+    }
+};

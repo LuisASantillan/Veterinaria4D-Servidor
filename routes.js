@@ -53,6 +53,12 @@ router.put('/auth/:id',
     , userController.editusr
 );
 
+//OBTENES LISTA DE USUARIOS 
+router.get('/listUsrs',
+    //auth,
+    userController.getusr
+);
+
 
 //ROUTES PRODUCTS
 
@@ -139,6 +145,13 @@ router.put('/editCategory/:id',
     categoryController.editCategory
 );
 
+//ELIMINAR CATEGORIA 
+router.delete('/deleteCategory/:id',
+    //auth,
+    categoryController.deleteCategory
+);
+
+
 //COMPRA 
 //GUARDA UNA COMPRA
 router.post('/addPurchase',
@@ -161,6 +174,13 @@ router.delete('/deletePurchase/:id',
     purchaseController.deletePurchase
 );
 
+//LISTA COMPRA POR USUARIO 
+router.get('/listPurchaseByUsr/:id',
+    //auth,
+    purchaseController.listPurchaseByUsr
+);
+
+
 //SHIFTS 
 //AGREGA SHIFTS
 router.post('/addShifts',
@@ -182,6 +202,12 @@ router.get('/listShiftsByUsr/:id',
     //auth,
     shiftsController.listShiftsByUsr
 ); 
+
+//EDITA TURNO
+router.put('/editShifts/:id',
+    //auth,
+    shiftsController.editShifts
+);
 
 //AGREGA SPECIES
 router.post('/addSpecie',
@@ -212,6 +238,8 @@ router.get('/listSpeciality',
     //auth,
     specialityController.listSpecialitys
 );
+
+
 
 
 

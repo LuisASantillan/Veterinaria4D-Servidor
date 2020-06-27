@@ -1,5 +1,6 @@
 const purchase    = require('../models/ecommerce/ad-ecommerce/Purchase');
 const cartProduct = require('../models/ecommerce/ad-ecommerce/CartProducts');
+const user        = require('../models/users/Users');
 
 
 const bcryptjs = require('bcryptjs');
@@ -59,6 +60,51 @@ exports.listPurchase = async (req, res) => {
     )
 };
 
+
+// Lista una Compra por usuario
+exports.listPurchaseByUsr = async (req, res) => {
+
+    const users = await user.findById(req.params.id);
+    if(!users){
+        res.status(400).json({ msg: 'La Categoria no existe.'});
+    }
+
+    //const carproducts = await cartProduct.find().populate({path:'users'});
+    purchase.aggregate(
+        [
+            {
+                $match: {
+                    users: users._id
+                }
+            },
+            {
+                $lookup:
+                {
+                  from: 'cardproducts',
+                  localField: '_id',
+                  foreignField: 'purchase',
+                  as: 'cartproducts'
+                }
+            },
+            {
+                $lookup:
+                {
+                  from: 'users',
+                  localField: 'users',
+                  foreignField: '_id',
+                  as: 'users'
+                }
+            },
+        ],
+
+        function (err, data) {
+
+            if (err)
+                throw err;
+            res.json({data });
+        }
+    )
+};
 
 
 // Elimina una Compra
