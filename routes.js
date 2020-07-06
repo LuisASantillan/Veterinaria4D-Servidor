@@ -46,6 +46,7 @@ router.post('/auth/',
 
 //EDITAR USUARIO
 router.put('/auth/:id',
+    auth,
     [
         check('email', 'El email es obligatorio.').not().isEmpty(),
         check('password', 'El password es obligatorio.').not().isEmpty()
@@ -55,7 +56,7 @@ router.put('/auth/:id',
 
 //OBTENES LISTA DE USUARIOS 
 router.get('/listUsrs',
-    //auth,
+    auth,
     userController.getusr
 );
 
@@ -176,7 +177,7 @@ router.delete('/deletePurchase/:id',
 
 //LISTA COMPRA POR USUARIO 
 router.get('/listPurchaseByUsr/:id',
-    //auth,
+    auth,
     purchaseController.listPurchaseByUsr
 );
 
@@ -238,9 +239,6 @@ router.get('/listSpeciality',
     //auth,
     specialityController.listSpecialitys
 );
-
-
-
 
 
 

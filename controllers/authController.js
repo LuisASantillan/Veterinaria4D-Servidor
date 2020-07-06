@@ -136,9 +136,9 @@ exports.editusr = async (req, res) => {
 exports.getusr = async (req, res) => {
     try {
         const users = await user.find();
-        res.json({ users });
+        res.json({ users , success:true });
     } catch (error) {
         console.log(error);
-        return res.status(400).json({ msg: 'Hubo un error' });
+        return res.status(400).json({ msg: 'Hubo un error' , success:false });
     }
 };

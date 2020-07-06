@@ -28,8 +28,20 @@ exports.addPurchase = async (req, res) => {
 // Lista una Compra
 exports.listPurchase = async (req, res) => {
 
+    let  { page = 1 , limit = 100 } = req.query;
+    //page = parseInt(page); 
+
     //const carproducts = await cartProduct.find().populate({path:'users'});
-    purchase.aggregate(
+
+    purchase.paginate().then(function(result) {
+        // result.docs - array of plain javascript objects
+        // result.limit - 20
+        console.log(result.docs)
+        console.log(result.limit)
+      });
+
+    const purchases    = await purchase.find();
+    const listpurchase = purchase.aggregate(
         [
             {
                 $lookup:
@@ -55,9 +67,22 @@ exports.listPurchase = async (req, res) => {
 
             if (err)
                 throw err;
-            res.json({data });
+
+            res.json({
+                data,
+                totalPages: Math.ceil(purchases.length / limit),
+                currentPage: page , 
+                success:true 
+              });
         }
     )
+    .skip((page - 1) * limit)
+    .limit(limit * 1)
+    .exec();
+
+    
+
+
 };
 
 
@@ -66,7 +91,7 @@ exports.listPurchaseByUsr = async (req, res) => {
 
     const users = await user.findById(req.params.id);
     if(!users){
-        res.status(400).json({ msg: 'La Categoria no existe.'});
+        res.status(400).json({ msg: 'El Usuario no existe' , success:false});
     }
 
     //const carproducts = await cartProduct.find().populate({path:'users'});
@@ -101,7 +126,7 @@ exports.listPurchaseByUsr = async (req, res) => {
 
             if (err)
                 throw err;
-            res.json({data });
+            res.json({data  , success:true});
         }
     )
 };
