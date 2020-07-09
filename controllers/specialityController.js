@@ -10,7 +10,6 @@ exports.addSpeciality = async (req, res) => {
     try {
         
         let specialitys = new speciality(req.body);
-        // Guardamos el Producto en la BD
         await specialitys.save();
         res.json({ msg: 'Especialidad Guardada', specialitys });
 
