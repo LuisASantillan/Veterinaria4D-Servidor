@@ -1,4 +1,4 @@
-const  payment  = require('../models/ecommerce/ad-ecommerce/Payments');
+const  payment  = require('../models/ecommerce/ad-ecommerce/Payment');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const mongoose = require('../database');
@@ -6,9 +6,8 @@ const mongoose = require('../database');
 exports.addPayment = async (req, res) => {
     console.log(req.body);
     try {
-        // Creamos el Producto
+      
         let payments = new payment(req.body);
-        // Guardamos el Producto en la BD
         await payments.save();
         res.json({ msg: 'Pago creado correctamente.', payments });
 

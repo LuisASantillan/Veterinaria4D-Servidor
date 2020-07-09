@@ -25,9 +25,9 @@ exports.addSpeciality = async (req, res) => {
 exports.listSpecialitys = async (req, res) => {
     try {
         const specialitys = await speciality.find();
-        res.json({ specialitys });
+        res.json({ specialitys , success:true });
     } catch (error) {
         console.log(error);
-        return res.status(400).json({ msg: 'Hubo un error' });
+        return res.status(400).json({ msg: 'Hubo un error' , success:false });
     }
 };

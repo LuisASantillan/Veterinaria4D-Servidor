@@ -14,12 +14,12 @@ const ShiftSchemma = mongoose.Schema({
     },
     speciality: {
         type: Schemma.Types.ObjectId,
-        ref: 'specialitys' , 
+        ref: 'Speciality' , 
         trim: true
     },
     specie: {
         type: Schemma.Types.ObjectId,
-        ref: 'species' , 
+        ref: 'Specie' , 
         trim: true
     },
     Date: {
@@ -28,7 +28,7 @@ const ShiftSchemma = mongoose.Schema({
     },
     user:{
         type: Schemma.Types.ObjectId,
-        ref: 'users' 
+        ref: 'User' 
     } , 
     state:{
         type:Boolean, 
@@ -37,5 +37,5 @@ const ShiftSchemma = mongoose.Schema({
     }
     
 });
-// Definimos el modelo Meme con el schema correspondiente
-module.exports = mongoose.model('shifts', ShiftSchemma);
+
+module.exports = mongoose.model('Shift', ShiftSchemma);

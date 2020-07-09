@@ -1,4 +1,4 @@
-const user = require('../models/users/Users');
+const user = require('../models/users/User');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const mongoose = require('../database');
@@ -83,7 +83,7 @@ exports.users = async (req, res) => {
         // Creamos payload
         const payload = {
             usuario: {
-                id: usuario.id
+                id: users.id
             }
         };
 
@@ -96,7 +96,7 @@ exports.users = async (req, res) => {
         })
     } catch (error) {
         console.error(error);
-        res.status(400).json({ msg: 'Hubo un error' });
+        res.status(400).json({ msg: 'Hubo un error' , success:false });
     }
 
 };

@@ -13,5 +13,5 @@ const SpecieSchemma = mongoose.Schema({
     },
     
 });
-// Definimos el modelo Meme con el schema correspondiente
-module.exports = mongoose.model('species', SpecieSchemma);
+
+module.exports = mongoose.model('Specie', SpecieSchemma);

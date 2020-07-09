@@ -10,7 +10,6 @@ exports.addSpecie = async (req, res) => {
     try {
         
         let species = new specie(req.body);
-        // Guardamos el Producto en la BD
         await species.save();
         res.json({ msg: 'Especie Guardada', species });
 
@@ -24,9 +23,9 @@ exports.addSpecie = async (req, res) => {
 exports.listSpecies = async (req, res) => {
     try {
         const species = await specie.find();
-        res.json({ species });
+        res.json({ species , success:true });
     } catch (error) {
         console.log(error);
-        return res.status(400).json({ msg: 'Hubo un error' });
+        return res.status(400).json({ msg: 'Hubo un error' , success:false });
     }
 };

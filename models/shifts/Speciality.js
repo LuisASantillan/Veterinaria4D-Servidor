@@ -13,5 +13,5 @@ const SpecilitySchemma = mongoose.Schema({
     },
     
 });
-// Definimos el modelo Meme con el schema correspondiente
-module.exports = mongoose.model('specialitys', SpecilitySchemma);
+
+module.exports = mongoose.model('Speciality', SpecilitySchemma);

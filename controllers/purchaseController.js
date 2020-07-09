@@ -1,6 +1,6 @@
 const purchase    = require('../models/ecommerce/ad-ecommerce/Purchase');
-const cartProduct = require('../models/ecommerce/ad-ecommerce/CartProducts');
-const user        = require('../models/users/Users');
+const cartProduct = require('../models/ecommerce/ad-ecommerce/CartProduct');
+const user        = require('../models/users/User');
 
 
 const bcryptjs = require('bcryptjs');
@@ -12,9 +12,8 @@ const mongoose = require('../database');
 exports.addPurchase = async (req, res) => {
     console.log(req.body);
     try {
-        // Creamos el Producto
+ 
         let purchases = new purchase(req.body);
-        // Guardamos el Producto en la BD
         await purchases.save();
         res.json({ msg: 'Venta guardada', purchases });
 
@@ -29,16 +28,13 @@ exports.addPurchase = async (req, res) => {
 exports.listPurchase = async (req, res) => {
 
     let  { page = 1 , limit = 100 } = req.query;
-    //page = parseInt(page); 
-
-    //const carproducts = await cartProduct.find().populate({path:'users'});
 
     purchase.paginate().then(function(result) {
-        // result.docs - array of plain javascript objects
-        // result.limit - 20
         console.log(result.docs)
         console.log(result.limit)
       });
+
+    purchase.find().populate("user").populate("");   
 
     const purchases    = await purchase.find();
     const listpurchase = purchase.aggregate(
@@ -99,7 +95,7 @@ exports.listPurchaseByUsr = async (req, res) => {
         [
             {
                 $match: {
-                    users: users._id
+                    user: users._id
                 }
             },
             {
@@ -115,7 +111,7 @@ exports.listPurchaseByUsr = async (req, res) => {
                 $lookup:
                 {
                   from: 'users',
-                  localField: 'users',
+                  localField: 'user',
                   foreignField: '_id',
                   as: 'users'
                 }
@@ -135,16 +131,16 @@ exports.listPurchaseByUsr = async (req, res) => {
 // Elimina una Compra
 exports.deletePurchase = async (req, res) => {
     try {
-        // Validar ID
+   
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(404).json({ msg: 'La Compra no existe' });
         }
-        // Verificar que el Producto exista
+ 
         let purchasedel = await purchase.findById(req.params.id);
         if (!proddel) {
             return res.status(404).json({ msg: 'La Compra no existe no existe.' });
         }
-        // Eliminar
+  
         await purchasedel.remove();
         res.json({ msg: 'La compra fue eliminada' });
 

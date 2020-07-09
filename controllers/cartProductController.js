@@ -1,4 +1,4 @@
-const  cartproduct  = require('../models/ecommerce/ad-ecommerce/CartProducts');
+const  cartproduct  = require('../models/ecommerce/ad-ecommerce/CartProduct');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const mongoose = require('../database');

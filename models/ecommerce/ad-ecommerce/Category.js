@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// Definimos el Schema
 const CategorySchemma = mongoose.Schema({
 
     name: {
@@ -17,5 +16,5 @@ const CategorySchemma = mongoose.Schema({
         default: Date.now()
     },
 });
-// Definimos el modelo Meme con el schema correspondiente
+
 module.exports = mongoose.model('Category', CategorySchemma);

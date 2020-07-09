@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const mongoose = require('../database');
 
 const shift = require('../models/shifts/Shift');
-const user = require('../models/users/Users');
+const user = require('../models/users/User');
 
 
 //AddShifts
@@ -12,7 +12,6 @@ exports.addShifts = async (req, res) => {
     try {
 
         let shifts = new shift(req.body);
-        // Guardamos el Producto en la BD
         await shifts.save();
         res.json({ msg: 'Turno Guardado', shifts });
 
@@ -103,16 +102,16 @@ exports.listShiftsByUsr = async (req, res) => {
 
 exports.editShifts = async (req, res) => {
     try {
-        // Validar ID
+        
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(404).json({ msg: 'EL turno no existe' });
         }
-        // Verificar que el Producto exista
+      
         let shiftedit = await shift.findById(req.params.id);
         if (!shiftedit) {
             return res.status(404).json({ msg: 'El turno no existe.' });
         }
-        // Editar 
+     
         shiftedit = await shift.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
         res.json({ msg: 'El turno fue actualizado.', shiftedit});

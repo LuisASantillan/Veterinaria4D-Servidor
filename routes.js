@@ -44,7 +44,6 @@ router.post('/auth/',
     , userController.auth
 );
 
-//EDITAR USUARIO
 router.put('/auth/:id',
     auth,
     [
@@ -54,7 +53,6 @@ router.put('/auth/:id',
     , userController.editusr
 );
 
-//OBTENES LISTA DE USUARIOS 
 router.get('/listUsrs',
     auth,
     userController.getusr
@@ -63,36 +61,31 @@ router.get('/listUsrs',
 
 //ROUTES PRODUCTS
 
-//AGREGA PRODUCTO
 router.post('/addProduct',
-    /*auth,*/
+    auth,
     [
         //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
     ]
     , productController.addProduct
 );
 
-//LISTA UN PRODUCTO
 router.get('/listProducts',
     //auth,
     productController.listProducts
 );
 
-//LISTA UN PRODUCTO POR ID 
 router.get('/listProductByCategory/:id',
     //auth,
     productController.listProductByCategory
 );
 
-//ELIMINA UN PRODUCTO
 router.delete('/deleteProduct/:id',
-    //auth,
+    auth,
     productController.deleteProduct
 );
 
-//EDITA UN PRODUCTO
 router.put('/editProduct/:id',
-    //auth,
+    auth,
     [
         //check('nombretarea', 'El titulo es obligatorio.').notEmpty(),
         //check('nombreetiqueta', 'La Etiqueta no es válida.').isMongoId()
@@ -102,7 +95,7 @@ router.put('/editProduct/:id',
 
 //ROUTES PAYMENTS 
 router.post('/addPayment',
-    /*auth,*/
+    auth,
     [
         //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
     ]
@@ -112,7 +105,7 @@ router.post('/addPayment',
 
 //ROUTES CARTPRODUCT
 router.post('/addCardProduct',
-    /*auth,*/
+    auth,
     [
         //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
     ]
@@ -121,125 +114,113 @@ router.post('/addCardProduct',
 
 //LISTAR CARRITO
 router.get('/ListCardProduct',
-    //auth,
+    auth,
     cartProductController.listcardProducts
 );
 
 //ROUTES CATEGORY
 router.post('/addCategory',
-    /*auth,*/
+    auth,
     [
         //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
     ]
     , categoryController.addCategory
 );
 
-//LISTAR CATEGORIA
 router.get('/listCategory/',
-    //auth,
+    auth,
     categoryController.listCategory
 );
 
-//EDITAR CATEGORIA
 router.put('/editCategory/:id',
-    //auth,
+    auth,
     categoryController.editCategory
 );
 
-//ELIMINAR CATEGORIA 
 router.delete('/deleteCategory/:id',
-    //auth,
+    auth,
     categoryController.deleteCategory
 );
 
 
-//COMPRA 
-//GUARDA UNA COMPRA
+//ROUTES COMPRA 
+
 router.post('/addPurchase',
-    /*auth,*/
+    auth,
     [
         //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
     ]
     , purchaseController.addPurchase
 );
 
-//LISTA UNA COMPRA
 router.get('/listPurchase',
-    //auth,
+    auth,
     purchaseController.listPurchase
 );
 
-//DELETE COMPRA 
 router.delete('/deletePurchase/:id',
-    //auth,
+    auth,
     purchaseController.deletePurchase
 );
 
-//LISTA COMPRA POR USUARIO 
 router.get('/listPurchaseByUsr/:id',
     auth,
     purchaseController.listPurchaseByUsr
 );
 
 
-//SHIFTS 
-//AGREGA SHIFTS
+//ROUTES SHIFTS 
+
 router.post('/addShifts',
-    /*auth,*/
+    auth,
     [
         //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
     ]
     ,shiftsController.addShifts
 );
 
-//LISTA SHIFTS
 router.get('/listShifts',
-    //auth,
+    auth,
     shiftsController.listShifts
 );
 
-//LIST SHIFTS BY USR
 router.get('/listShiftsByUsr/:id',
-    //auth,
+    auth,
     shiftsController.listShiftsByUsr
 ); 
 
-//EDITA TURNO
 router.put('/editShifts/:id',
-    //auth,
+    auth,
     shiftsController.editShifts
 );
 
-//AGREGA SPECIES
+//ROUTES SPECIES
 router.post('/addSpecie',
-    /*auth,*/
+    auth,
     [
         //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
     ]
     , specieController.addSpecie
 );
 
-//LISTA ESPECIES
 router.get('/listSpecie',
-    //auth,
+    auth,
     specieController.listSpecies
 );
 
-//AGREGA SPECIALITY
+//ROUTES SPECIALITY
 router.post('/addSpeciality',
-    /*auth,*/
+    auth,
     [
         //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
     ]
     , specialityController.addSpeciality
 );
 
-//LISTA ESPECIES
 router.get('/listSpeciality',
-    //auth,
+    auth,
     specialityController.listSpecialitys
 );
-
 
 
 module.exports = router;
