@@ -34,11 +34,10 @@ exports.listPurchase = async (req, res) => {
         console.log(result.limit)
       });
 
-    purchase.find().populate("user").populate("");   
-
     const purchases    = await purchase.find();
     const listpurchase = purchase.aggregate(
         [
+           
             {
                 $lookup:
                 {
@@ -52,7 +51,7 @@ exports.listPurchase = async (req, res) => {
                 $lookup:
                 {
                   from: 'users',
-                  localField: 'users',
+                  localField: 'user',
                   foreignField: '_id',
                   as: 'users'
                 }
@@ -74,7 +73,7 @@ exports.listPurchase = async (req, res) => {
     )
     .skip((page - 1) * limit)
     .limit(limit * 1)
-    .exec();
+    .exec(); 
 
     
 
