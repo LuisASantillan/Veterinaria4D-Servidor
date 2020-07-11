@@ -21,8 +21,6 @@ exports.auth = async (req, res) => {
 
         // Verificar la contraseña
         const passCorrecto = await bcryptjs.compare(password, users.password);
-        console.log(users.password);
-        console.log(password);
         if (!passCorrecto) {
             console.log('Password no válido.');
             res.status(400).json({ msg: 'El email o contraseña no son válidos.', success: false })
@@ -37,14 +35,17 @@ exports.auth = async (req, res) => {
             }
         };
 
+        var datausr = {} ; 
+                datausr.isadmin = users.isadmin ; 
+                datausr.nombre  = users.nombre ; 
+                datausr._id     = users._id    ; 
+
         // Firmar token
         jwt.sign(payload, process.env.SECRET, {
             expiresIn: '1h'
         }, (error, token) => {
             if (error) throw error;
-
-            // Mensaje de confirmación
-            res.json({ users, token, success: true });
+            res.json({ datausr, token, success: true });
         });
 
     } catch (error) {

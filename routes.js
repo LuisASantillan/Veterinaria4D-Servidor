@@ -70,12 +70,10 @@ router.post('/addProduct',
 );
 
 router.get('/listProducts',
-    //auth,
     productController.listProducts
 );
 
 router.get('/listProductByCategory/:id',
-    //auth,
     productController.listProductByCategory
 );
 
@@ -128,7 +126,6 @@ router.post('/addCategory',
 );
 
 router.get('/listCategory/',
-    auth,
     categoryController.listCategory
 );
 
@@ -144,7 +141,6 @@ router.delete('/deleteCategory/:id',
 
 
 //ROUTES COMPRA 
-
 router.post('/addPurchase',
     auth,
     [

@@ -97,10 +97,10 @@ exports.editProduct = async (req, res) => {
     
         proddel = await product.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-        res.json({ msg: 'El Producto fue actualizado.', proddel });
+        res.json({ msg: 'El Producto fue actualizado.', proddel , success:true });
 
     } catch (error) {
         console.log(error);
-        res.status(400).json({ msg: 'Hubo un error.' });
+        res.status(400).json({ msg: 'Hubo un error.' , success:false });
     }
 };
