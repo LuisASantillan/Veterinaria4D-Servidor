@@ -73,10 +73,7 @@ exports.listPurchase = async (req, res) => {
     )
     .skip((page - 1) * limit)
     .limit(limit * 1)
-    .exec(); 
-
-    
-
+    .exec();
 
 };
 
