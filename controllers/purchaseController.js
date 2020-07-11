@@ -1,6 +1,6 @@
-const purchase    = require('../models/ecommerce/ad-ecommerce/Purchase');
+const purchase = require('../models/ecommerce/ad-ecommerce/Purchase');
 const cartProduct = require('../models/ecommerce/ad-ecommerce/CartProduct');
-const user        = require('../models/users/User');
+const user = require('../models/users/User');
 
 
 const bcryptjs = require('bcryptjs');
@@ -12,7 +12,7 @@ const mongoose = require('../database');
 exports.addPurchase = async (req, res) => {
     console.log(req.body);
     try {
- 
+
         let purchases = new purchase(req.body);
         await purchases.save();
         res.json({ msg: 'Venta guardada', purchases });
@@ -27,33 +27,28 @@ exports.addPurchase = async (req, res) => {
 // Lista una Compra
 exports.listPurchase = async (req, res) => {
 
-    let  { page = 1 , limit = 100 } = req.query;
+    let { page, limit } = req.query;
 
-    purchase.paginate().then(function(result) {
-        console.log(result.docs)
-        console.log(result.limit)
-      });
-
-    const purchases    = await purchase.find();
+    const purchases = await purchase.find();
     const listpurchase = purchase.aggregate(
         [
-           
+
             {
                 $lookup:
                 {
-                  from: 'cardproducts',
-                  localField: '_id',
-                  foreignField: 'purchase',
-                  as: 'cartproducts'
+                    from: 'cardproducts',
+                    localField: '_id',
+                    foreignField: 'purchase',
+                    as: 'cartproducts'
                 }
             },
             {
                 $lookup:
                 {
-                  from: 'users',
-                  localField: 'user',
-                  foreignField: '_id',
-                  as: 'users'
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'users'
                 }
             },
         ],
@@ -66,14 +61,14 @@ exports.listPurchase = async (req, res) => {
             res.json({
                 data,
                 totalPages: Math.ceil(purchases.length / limit),
-                currentPage: page , 
-                success:true 
-              });
+                currentPage: page,
+                success: true
+            });
         }
     )
-    .skip((page - 1) * limit)
-    .limit(limit * 1)
-    .exec();
+        .skip((page - 1) * limit)
+        .limit(limit * 1)
+        .exec();
 
 };
 
@@ -81,12 +76,15 @@ exports.listPurchase = async (req, res) => {
 // Lista una Compra por usuario
 exports.listPurchaseByUsr = async (req, res) => {
 
+    let { page, limit } = req.query;
+    console.log(req.query);
+
     const users = await user.findById(req.params.id);
-    if(!users){
-        res.status(400).json({ msg: 'El Usuario no existe' , success:false});
+    if (!users) {
+        res.status(400).json({ msg: 'El Usuario no existe', success: false });
     }
 
-    //const carproducts = await cartProduct.find().populate({path:'users'});
+    const purchases = await purchase.find({ user: users._id });
     purchase.aggregate(
         [
             {
@@ -97,19 +95,19 @@ exports.listPurchaseByUsr = async (req, res) => {
             {
                 $lookup:
                 {
-                  from: 'cardproducts',
-                  localField: '_id',
-                  foreignField: 'purchase',
-                  as: 'cartproducts'
+                    from: 'cardproducts',
+                    localField: '_id',
+                    foreignField: 'purchase',
+                    as: 'cartproducts'
                 }
             },
             {
                 $lookup:
                 {
-                  from: 'users',
-                  localField: 'user',
-                  foreignField: '_id',
-                  as: 'users'
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'users'
                 }
             },
         ],
@@ -118,25 +116,37 @@ exports.listPurchaseByUsr = async (req, res) => {
 
             if (err)
                 throw err;
-            res.json({data  , success:true});
+
+            res.json({
+                data,
+                totalPages: Math.ceil(purchases.length / limit),
+                currentPage: page,
+                success: true
+            });
+
+            console.log(data)
+
         }
     )
+        .skip((page - 1) * limit)
+        .limit(limit * 1)
+        .exec();
 };
 
 
 // Elimina una Compra
 exports.deletePurchase = async (req, res) => {
     try {
-   
+
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(404).json({ msg: 'La Compra no existe' });
         }
- 
+
         let purchasedel = await purchase.findById(req.params.id);
         if (!proddel) {
             return res.status(404).json({ msg: 'La Compra no existe no existe.' });
         }
-  
+
         await purchasedel.remove();
         res.json({ msg: 'La compra fue eliminada' });
 
