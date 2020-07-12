@@ -27,7 +27,7 @@ exports.addPurchase = async (req, res) => {
 // Lista una Compra
 exports.listPurchase = async (req, res) => {
 
-    //let { page, limit } = req.query;
+    let { page, limit } = req.query;
 
     const purchases = await purchase.find();
     const listpurchase = purchase.aggregate(
@@ -60,15 +60,15 @@ exports.listPurchase = async (req, res) => {
 
             res.json({
                 data,
-                //totalPages: Math.ceil(purchases.length / limit),
-                //currentPage: page,
+                totalPages: Math.ceil(purchases.length / limit),
+                currentPage: page,
                 success: true
             });
         }
     )
-        /*.skip((page - 1) * limit)
+        .skip((page - 1) * limit)
         .limit(limit * 1)
-        .exec(); */
+        .exec();
 
 };
 
