@@ -204,6 +204,11 @@ router.get('/listSpecie',
     specieController.listSpecies
 );
 
+router.delete('/deleteSpecie/:id',
+    auth,
+    specieController.deleteSpecie
+);
+
 //ROUTES SPECIALITY
 router.post('/addSpeciality',
     auth,
@@ -216,6 +221,11 @@ router.post('/addSpeciality',
 router.get('/listSpeciality',
     auth,
     specialityController.listSpecialitys
+);
+
+router.delete('/deleteSpeciality/:id',
+    auth,
+    specialityController.deleteSpecialitys
 );
 
 

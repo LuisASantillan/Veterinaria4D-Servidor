@@ -38,7 +38,7 @@ exports.listShifts = async (req, res) => {
             {
                 $lookup:
                 {
-                    from: 'specialitys',
+                    from: 'specialities',
                     localField: 'speciality',
                     foreignField: '_id',
                     as: 'specialitys'
@@ -83,7 +83,7 @@ exports.listShiftsByUsr = async (req, res) => {
             {
                 $lookup:
                 {
-                    from: 'specialitys',
+                    from: 'specialities',
                     localField: 'speciality',
                     foreignField: '_id',
                     as: 'specialitys'

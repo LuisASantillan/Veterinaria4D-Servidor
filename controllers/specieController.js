@@ -29,3 +29,23 @@ exports.listSpecies = async (req, res) => {
         return res.status(400).json({ msg: 'Hubo un error' , success:false });
     }
 };
+
+exports.deleteSpecie = async (req, res) => {
+    try {
+      
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(404).json({ msg: 'La Specie no Existe' });
+        }
+       
+        let speciedel = await specie.findById(req.params.id);
+        if (!speciedel) {
+            return res.status(404).json({ msg: 'La Specie no Existe' });
+        }
+  
+        await speciedel.remove();
+        res.json({ msg: 'El Specie fue eliminado correctamente.', success: true });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ msg: 'Hubo un error.' , success:false });
+    }
+};
