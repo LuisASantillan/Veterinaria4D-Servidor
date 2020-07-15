@@ -71,6 +71,9 @@ exports.listShiftsByUsr = async (req, res) => {
                     user: users._id
                 }
             },
+            { 
+                $sort : { date : -1 , state: 1 } 
+            }, 
             {
                 $lookup:
                 {

@@ -42,7 +42,7 @@ exports.auth = async (req, res) => {
 
         // Firmar token
         jwt.sign(payload, process.env.SECRET, {
-            expiresIn: '1h'
+            expiresIn: '365d'
         }, (error, token) => {
             if (error) throw error;
             res.json({ datausr, token, success: true });
@@ -90,7 +90,7 @@ exports.users = async (req, res) => {
 
         // Firmar el token
         jwt.sign(payload, process.env.SECRET, {
-            expiresIn: '1h'
+            expiresIn: '365d'
         }, (error, token) => {
             if (error) throw error;
             res.json({ msg: 'Usuario creado correctamente', token, users, success: true });

@@ -34,6 +34,11 @@ const ShiftSchemma = mongoose.Schema({
         type:Boolean, 
         trim: true, 
         default: false
+    } , 
+    timeshifts:{
+        type: String,
+        required: true,
+        trim: true
     }
     
 });
