@@ -190,6 +190,11 @@ router.put('/editShifts/:id',
     shiftsController.editShifts
 );
 
+router.get('/listShiftsbydatetime/:date/:time',
+    auth,
+    shiftsController.listShiftsbydatetime
+); 
+
 //ROUTES SPECIES
 router.post('/addSpecie',
     auth,

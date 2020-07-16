@@ -35,6 +35,9 @@ exports.listShifts = async (req, res) => {
                     as: 'species'
                 }
             },
+            { 
+                $sort : { date : -1 , state: 1 } 
+            }, 
             {
                 $lookup:
                 {
@@ -125,3 +128,49 @@ exports.editShifts = async (req, res) => {
     }
 };
 
+
+exports.listShiftsbydatetime = async (req, res) => {
+ 
+    var date = new Date(req.params.date+"T00:00:00.000Z") ; 
+    var time = req.params.time ;
+
+    console.log(date);
+    console.log(time);
+
+    shift.aggregate(
+        [
+            {
+            $match: {
+                dateshifts: date , 
+                timeshifts : time , 
+                state : false
+                }
+            } , 
+            {
+                $lookup:
+                {
+                    from: 'species',
+                    localField: 'specie',
+                    foreignField: '_id',
+                    as: 'species'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'specialities',
+                    localField: 'speciality',
+                    foreignField: '_id',
+                    as: 'specialitys'
+                }
+            },
+        ],
+
+        function (err, data) {
+
+            if (err)
+                throw err;
+            res.json({ data , success:data.length >0 });
+        }
+    )
+};
