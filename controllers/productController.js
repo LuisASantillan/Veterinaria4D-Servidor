@@ -74,10 +74,10 @@ exports.deleteProduct = async (req, res) => {
         }
     
         await proddel.remove();
-        res.json({ msg: 'El Producto fue eliminado correctamente.' });
+        res.json({ msg: 'El Producto fue eliminado correctamente.' , success:true });
     } catch (error) {
         console.log(error);
-        res.status(400).json({ msg: 'Hubo un error.' });
+        res.status(400).json({ msg: 'Hubo un error.' , success:false });
     }
 };
 

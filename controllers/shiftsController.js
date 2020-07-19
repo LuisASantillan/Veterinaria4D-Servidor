@@ -23,7 +23,12 @@ exports.addShifts = async (req, res) => {
 
 // Lista Turnos Solicitados
 exports.listShifts = async (req, res) => {
- 
+
+    let { page, limit } = req.query;
+    console.log(limit);
+    console.log(page);
+    const shifts = await shift.find();
+
     shift.aggregate(
         [
             {
@@ -35,9 +40,9 @@ exports.listShifts = async (req, res) => {
                     as: 'species'
                 }
             },
-            { 
-                $sort : { date : -1 , state: 1 } 
-            }, 
+            {
+                $sort: { date: -1, state: 1 }
+            },
             {
                 $lookup:
                 {
@@ -47,24 +52,44 @@ exports.listShifts = async (req, res) => {
                     as: 'specialitys'
                 }
             },
+            {
+                $lookup:
+                {
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'users'
+                }
+            },
         ],
 
         function (err, data) {
 
             if (err)
                 throw err;
-            res.json({ data });
+            res.json({
+                data,
+                totalPages: Math.ceil(shifts.length / limit),
+                currentPage: page,
+                success: true
+            });
         }
     )
+        .skip((page - 1) * limit)
+        .limit(limit * 1)
+        .exec();
 };
 
 
 //Listar Shifts Por Id
 exports.listShiftsByUsr = async (req, res) => {
 
+    let { page, limit } = req.query;
     const users = await user.findById(req.params.id);
-    if(!users){
-        res.status(400).json({ msg: 'La Categoria no existe.'});
+    const shifts = await shift.find({ user: users._id });
+
+    if (!users) {
+        res.status(400).json({ msg: 'La Categoria no existe.' });
     }
 
     shift.aggregate(
@@ -74,9 +99,9 @@ exports.listShiftsByUsr = async (req, res) => {
                     user: users._id
                 }
             },
-            { 
-                $sort : { date : -1 , state: 1 } 
-            }, 
+            {
+                $sort: { date: -1, state: 1 }
+            },
             {
                 $lookup:
                 {
@@ -101,27 +126,37 @@ exports.listShiftsByUsr = async (req, res) => {
 
             if (err)
                 throw err;
-            res.json({ data });
+
+            res.json({
+                data,
+                totalPages: Math.ceil(shifts.length / limit),
+                currentPage: page,
+                success: true
+            });
         }
     )
+
+        .skip((page - 1) * limit)
+        .limit(limit * 1)
+        .exec();
 };
 
 exports.editShifts = async (req, res) => {
     try {
-        
+
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return res.status(404).json({ msg: 'EL turno no existe' });
         }
-      
+
         let shiftedit = await shift.findById(req.params.id);
         if (!shiftedit) {
             return res.status(404).json({ msg: 'El turno no existe.' });
         }
-     
+
         shiftedit = await shift.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-        res.json({ msg: 'El turno fue actualizado.', shiftedit});
-        
+        res.json({ msg: 'El turno fue actualizado.', shiftedit });
+
     } catch (error) {
         console.log(error);
         res.status(400).json({ msg: 'Hubo un error.' });
@@ -130,9 +165,9 @@ exports.editShifts = async (req, res) => {
 
 
 exports.listShiftsbydatetime = async (req, res) => {
- 
-    var date = new Date(req.params.date+"T00:00:00.000Z") ; 
-    var time = req.params.time ;
+
+    var date = new Date(req.params.date + "T00:00:00.000Z");
+    var time = req.params.time;
 
     console.log(date);
     console.log(time);
@@ -140,12 +175,12 @@ exports.listShiftsbydatetime = async (req, res) => {
     shift.aggregate(
         [
             {
-            $match: {
-                dateshifts: date , 
-                timeshifts : time , 
-                state : false
+                $match: {
+                    dateshifts: date,
+                    timeshifts: time,
+                    state: false
                 }
-            } , 
+            },
             {
                 $lookup:
                 {
@@ -170,7 +205,7 @@ exports.listShiftsbydatetime = async (req, res) => {
 
             if (err)
                 throw err;
-            res.json({ data , success:data.length >0 });
+            res.json({ data, success: data.length > 0 });
         }
     )
 };
