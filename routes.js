@@ -58,6 +58,10 @@ router.get('/listUsrs',
     userController.getusr
 );
 
+router.get('/listUsrsbyId/:id',
+    auth,
+    userController.getusrbyId
+);
 
 //ROUTES PRODUCTS
 

@@ -143,3 +143,14 @@ exports.getusr = async (req, res) => {
         return res.status(400).json({ msg: 'Hubo un error' , success:false });
     }
 };
+
+
+exports.getusrbyId = async (req, res) => {
+    try {
+        const users = await user.find({_id:req.params.id});
+        res.json({ users , success:true });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ msg: 'Hubo un error' , success:false });
+    }
+};
