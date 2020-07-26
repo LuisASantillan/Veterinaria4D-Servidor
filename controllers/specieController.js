@@ -9,13 +9,18 @@ exports.addSpecie = async (req, res) => {
    
     try {
         
-        let species = new specie(req.body);
+        let species = await specie.find({name:req.body.name}); 
+        if(species.length > 0){
+           return res.status(400).json({ msg: 'Especie ya Existe' , success:false });
+        }
+
+        species = new specie(req.body);
         await species.save();
-        res.json({ msg: 'Especie Guardada', species });
+        res.json({ msg: 'Especie Guardada', species , success:true });
 
     } catch (error) {
         console.error(error);
-        res.status(400).json({ msg: 'Hubo un error.' });
+        res.status(400).json({ msg: 'Hubo un error.' , success:false });
     }
 };
 

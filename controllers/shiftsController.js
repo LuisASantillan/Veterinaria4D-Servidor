@@ -11,13 +11,30 @@ exports.addShifts = async (req, res) => {
 
     try {
 
-        let shifts = new shift(req.body);
+        var date = new Date(req.body.dateshifts + "T00:00:00.000Z");
+        var time = req.params.timeshifts;
+
+        let shifts = await shift.find({timeshifts:time , dateshifts:date }); 
+        if(shifts.length > 0){
+            return res.status(404).json({ msg: 'Hubo un error: Horario Ocupado', success: false });
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(req.body.specie)) {
+            return res.status(404).json({ msg: 'La Especie No Existe' , success:false });
+        }
+
+        
+        if (!mongoose.Types.ObjectId.isValid(req.body.speciality)) {
+            return res.status(404).json({ msg: 'La Especialidad No Existe' , success:false });
+        }
+
+        shifts = new shift(req.body);
         await shifts.save();
-        res.json({ msg: 'Turno Guardado', shifts });
+        res.json({ msg: 'Turno Guardado', shifts , success:true });
 
     } catch (error) {
         console.error(error);
-        res.status(400).json({ msg: 'Hubo un error.' });
+        res.status(400).json({ msg: 'Hubo un error.' , success:false});
     }
 };
 
@@ -89,7 +106,7 @@ exports.listShiftsByUsr = async (req, res) => {
     const shifts = await shift.find({ user: users._id });
 
     if (!users) {
-        res.status(400).json({ msg: 'La Categoria no existe.' });
+        res.status(400).json({ msg: 'El usuario no existe.' });
     }
 
     shift.aggregate(
@@ -155,11 +172,11 @@ exports.editShifts = async (req, res) => {
 
         shiftedit = await shift.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-        res.json({ msg: 'El turno fue actualizado.', shiftedit });
+        res.json({ msg: 'El turno fue actualizado.', shiftedit , success:true });
 
     } catch (error) {
         console.log(error);
-        res.status(400).json({ msg: 'Hubo un error.' });
+        res.status(400).json({ msg: 'Hubo un error.' , success:false });
     }
 };
 

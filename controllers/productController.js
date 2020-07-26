@@ -10,8 +10,16 @@ const mongoose = require('../database');
 exports.addProduct = async (req, res) => {
     console.log(req.body);
     try {
+        if (!mongoose.Types.ObjectId.isValid(req.body.category)) {
+            return res.status(404).json({ msg: 'Categoria No Valida' , success:false });
+        }
 
-        let products = new product(req.body);
+        let products = await product.find({title:req.body.title}); 
+        if(products.length > 0){
+            return res.status(404).json({ msg: 'Producto Existente' , success:false });
+        }
+
+        products = new product(req.body);
 
         await products.save();
         res.json({ msg: 'Producto creado correctamente.', products, success: true });
@@ -25,31 +33,15 @@ exports.addProduct = async (req, res) => {
 
 // Lista los Productos
 exports.listProducts = async (req, res) => {
-    /* try {
-         const products = await product.find();
- 
-         if (products.length > 0) {
-             res.json({ products, success: true });
-         }else {
-             res.json({ products, success: false });
-         }
-     } catch (error) {
-         console.log(error);
-         return res.status(400).json({ msg: 'Hubo un error', success: false });
-     } */
-
     try {
 
         let { page, limit } = req.query;
-
         const prod = await product.find();
         const listproducts = product.aggregate(
 
             function (err, products) {
-
                 if (err)
                     throw err;
-
                 res.json({
                     products,
                     totalPages: Math.ceil(prod.length / limit),
@@ -66,24 +58,11 @@ exports.listProducts = async (req, res) => {
         console.log(error);
         return res.status(400).json({ msg: 'Hubo un error', success: false });
     }
-
 };
 
 
 //Listar Producto Por Id
 exports.listProductByCategory = async (req, res) => {
-
-        /* const categorys = await category.findById(req.params.id);
-         if (!categorys) {
-             res.status(400).json({ msg: 'La Categoria no existe.' });
-         }
- 
-         const products = await product.find({ category: categorys._id });
-         if (products.length > 0) {
-             res.json({ products, success: true });
-         }else {
-             res.json({ products, success: false });
-         } */
 
         try {
             const categorys = await category.findById(req.params.id);
@@ -152,6 +131,10 @@ exports.listProductByCategory = async (req, res) => {
     // Modifica un Producto
     exports.editProduct = async (req, res) => {
         try {
+
+            if (!mongoose.Types.ObjectId.isValid(req.body.category)) {
+                return res.status(404).json({ msg: 'Categoria No Valida' , success:false });
+            }
 
             if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
                 return res.status(404).json({ msg: 'El Producto no existe.' });

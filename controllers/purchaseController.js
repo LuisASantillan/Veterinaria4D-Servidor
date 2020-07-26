@@ -2,7 +2,6 @@ const purchase = require('../models/ecommerce/ad-ecommerce/Purchase');
 const cartProduct = require('../models/ecommerce/ad-ecommerce/CartProduct');
 const user = require('../models/users/User');
 
-
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const mongoose = require('../database');
@@ -28,11 +27,9 @@ exports.addPurchase = async (req, res) => {
 exports.listPurchase = async (req, res) => {
 
     let { page, limit } = req.query;
-
     const purchases = await purchase.find();
     const listpurchase = purchase.aggregate(
         [
-
             {
                 $lookup:
                 {
@@ -78,7 +75,6 @@ exports.listPurchaseByUsr = async (req, res) => {
 
     let { page, limit } = req.query;
     console.log(req.query);
-
     const users = await user.findById(req.params.id);
     if (!users) {
         res.status(400).json({ msg: 'El Usuario no existe', success: false });

@@ -28,7 +28,7 @@ router.post('/users/',
         check('name', 'El nombre es obligatorio.').not().isEmpty(),
         check('email', 'El email es obligatorio.').not().isEmpty(),
         check('email', 'Ingrese un email válido.').isEmail(),
-        check('password', 'El email es obligatorio.').not().isEmpty(),
+        check('password', 'El password es obligatorio.').not().isEmpty(),
         check('password', 'El password debe ser mínimo de 6 caracteres.').isLength({
             min: 6
         })
@@ -64,11 +64,15 @@ router.get('/listUsrsbyId/:id',
 );
 
 //ROUTES PRODUCTS
-
 router.post('/addProduct',
     auth,
     [
-        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+        check('title', 'El nombre es obligatorio.').notEmpty(),
+        check('price', 'El precio es obligatorio.').notEmpty(),
+        check('stock', 'El stock es obligatorio.').notEmpty(),
+        check('detail', 'El detalle es obligatorio.').notEmpty(),
+        check('urlimg', 'La URL es obligatoria.').notEmpty(),
+        check('category', 'La categoria es obligatoria.').notEmpty(),
     ]
     , productController.addProduct
 );
@@ -89,8 +93,12 @@ router.delete('/deleteProduct/:id',
 router.put('/editProduct/:id',
     auth,
     [
-        //check('nombretarea', 'El titulo es obligatorio.').notEmpty(),
-        //check('nombreetiqueta', 'La Etiqueta no es válida.').isMongoId()
+        check('title', 'El nombre es obligatorio.').notEmpty(),
+        check('price', 'El precio es obligatorio.').notEmpty(),
+        check('stock', 'El stock es obligatorio.').notEmpty(),
+        check('detail', 'El detalle es obligatorio.').notEmpty(),
+        check('urlimg', 'La URL es obligatoria.').notEmpty(),
+        check('category', 'La categoria es obligatoria.').notEmpty(),
     ],
     productController.editProduct
 );
@@ -99,7 +107,9 @@ router.put('/editProduct/:id',
 router.post('/addPayment',
     auth,
     [
-        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+        check('cvc', 'El Codigo de tarjeta es obligatorio.').notEmpty(),
+        check('expiry', 'La expiracion es obligatorio.').notEmpty(),
+        check('number', 'El numero es obligatorio.').notEmpty(),
     ]
     , paymentsController.addPayment
 );
@@ -109,7 +119,12 @@ router.post('/addPayment',
 router.post('/addCardProduct',
     auth,
     [
-        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+        check('title', 'El nombre es obligatorio.').notEmpty(),
+        check('knt', 'La Cantidad es obligatorio.').notEmpty(),
+        check('price', 'La Cantidad es obligatorio.').notEmpty(),
+        check('payment', 'El pago es obligatorio.').notEmpty(),
+        check('purchase', 'La Compra es obligatorio.').notEmpty(),
+
     ]
     , cartProductController.addCardProduct
 );
@@ -124,7 +139,8 @@ router.get('/ListCardProduct',
 router.post('/addCategory',
     auth,
     [
-        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+        check('name', 'El nombre es obligatorio.').notEmpty() , 
+        check('detail', 'El Detalle es obligatorio.').notEmpty()
     ]
     , categoryController.addCategory
 );
@@ -135,6 +151,10 @@ router.get('/listCategory/',
 
 router.put('/editCategory/:id',
     auth,
+    [
+        check('name', 'El nombre es obligatorio.').notEmpty() , 
+        check('detail', 'El Detalle es obligatorio.').notEmpty()
+    ], 
     categoryController.editCategory
 );
 
@@ -148,7 +168,8 @@ router.delete('/deleteCategory/:id',
 router.post('/addPurchase',
     auth,
     [
-        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+        check('totalprice', 'El Importe es obligatorio.').notEmpty(),
+        check('address', 'El Domicilio es obligatorio.').notEmpty()
     ]
     , purchaseController.addPurchase
 );
@@ -170,11 +191,15 @@ router.get('/listPurchaseByUsr/:id',
 
 
 //ROUTES SHIFTS 
-
 router.post('/addShifts',
     auth,
     [
-        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+        check('petname', 'El nombre es obligatorio.').notEmpty() ,
+        check('dateshifts', 'El dia es obligatorio.').notEmpty() ,
+        check('speciality', 'La Especialidad es obligatoria.').notEmpty() ,
+        check('specie', 'La Especie es obligatoria.').notEmpty() ,
+        check('timeshifts', 'El Horario es Obligatorio').notEmpty() ,
+        
     ]
     ,shiftsController.addShifts
 );
@@ -203,7 +228,7 @@ router.get('/listShiftsbydatetime/:date/:time',
 router.post('/addSpecie',
     auth,
     [
-        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+        check('name', 'El nombre es obligatorio.').notEmpty()
     ]
     , specieController.addSpecie
 );
@@ -222,7 +247,7 @@ router.delete('/deleteSpecie/:id',
 router.post('/addSpeciality',
     auth,
     [
-        //check('nombrecategoria', 'El nombre es obligatorio.').notEmpty()
+        check('name', 'El nombre es obligatorio.').notEmpty()
     ]
     , specialityController.addSpeciality
 );
