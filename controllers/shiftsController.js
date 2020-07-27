@@ -183,8 +183,10 @@ exports.editShifts = async (req, res) => {
 
 exports.listShiftsbydatetime = async (req, res) => {
 
+    const {ObjectId} = require('mongodb');
     var date = new Date(req.params.date + "T00:00:00.000Z");
     var time = req.params.time;
+    var speciality = req.params.speciality;
 
     console.log(date);
     console.log(time);
@@ -195,7 +197,8 @@ exports.listShiftsbydatetime = async (req, res) => {
                 $match: {
                     dateshifts: date,
                     timeshifts: time,
-                    state: false
+                    state: false ,
+                    speciality: ObjectId(speciality)
                 }
             },
             {

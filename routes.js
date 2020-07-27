@@ -67,11 +67,12 @@ router.get('/listUsrsbyId/:id',
 router.post('/addProduct',
     auth,
     [
+        
         check('title', 'El nombre es obligatorio.').notEmpty(),
         check('price', 'El precio es obligatorio.').notEmpty(),
         check('stock', 'El stock es obligatorio.').notEmpty(),
         check('detail', 'El detalle es obligatorio.').notEmpty(),
-        check('urlimg', 'La URL es obligatoria.').notEmpty(),
+        check('imgBase64', 'La Imagen es obligatoria.').notEmpty(),
         check('category', 'La categoria es obligatoria.').notEmpty(),
     ]
     , productController.addProduct
@@ -219,7 +220,7 @@ router.put('/editShifts/:id',
     shiftsController.editShifts
 );
 
-router.get('/listShiftsbydatetime/:date/:time',
+router.get('/listShiftsbydatetime/:date/:time/:speciality',
     auth,
     shiftsController.listShiftsbydatetime
 ); 
