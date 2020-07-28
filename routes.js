@@ -72,7 +72,7 @@ router.post('/addProduct',
         check('price', 'El precio es obligatorio.').notEmpty(),
         check('stock', 'El stock es obligatorio.').notEmpty(),
         check('detail', 'El detalle es obligatorio.').notEmpty(),
-        check('imgBase64', 'La Imagen es obligatoria.').notEmpty(),
+        check('urlimg', 'La Imagen es obligatoria.').notEmpty(),
         check('category', 'La categoria es obligatoria.').notEmpty(),
     ]
     , productController.addProduct
