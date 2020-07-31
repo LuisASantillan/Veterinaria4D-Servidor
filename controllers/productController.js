@@ -1,5 +1,6 @@
-const product = require('../models/ecommerce/ad-ecommerce/Product');
-const category = require('../models/ecommerce/ad-ecommerce/Category');
+const product     = require('../models/ecommerce/ad-ecommerce/Product');
+const cartproduct = require('../models/ecommerce/ad-ecommerce/CartProduct');
+const category    = require('../models/ecommerce/ad-ecommerce/Category');
 
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
@@ -111,12 +112,17 @@ exports.listProductByCategory = async (req, res) => {
         try {
 
             if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-                return res.status(404).json({ msg: 'El Producto no existe.' });
+                return res.status(404).json({success : false, msg: 'El Producto no existe.' });
             }
 
             let proddel = await product.findById(req.params.id);
             if (!proddel) {
-                return res.status(404).json({ msg: 'El Producto no existe.' });
+                return res.status(404).json({success : false ,  msg: 'El Producto no existe.' });
+            }
+
+            let cartproducts = await cartproduct.find({product:req.params.id});
+            if (cartproducts.length > 0) {
+                return res.status(404).json({success : false ,  msg: 'Carrito Asociado' });
             }
 
             await proddel.remove();

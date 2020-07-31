@@ -124,7 +124,8 @@ router.post('/addCardProduct',
         check('knt', 'La Cantidad es obligatorio.').notEmpty(),
         check('price', 'La Cantidad es obligatorio.').notEmpty(),
         check('payment', 'El pago es obligatorio.').notEmpty(),
-        check('purchase', 'La Compra es obligatorio.').notEmpty(),
+        check('purchase', ' En La Compra es obligatorio.').notEmpty(),
+        check('product', 'En La Compra es obligatorio.').notEmpty(),
 
     ]
     , cartProductController.addCardProduct

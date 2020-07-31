@@ -2,6 +2,10 @@ const category = require('../models/ecommerce/ad-ecommerce/Category');
 const bcryptjs = require('bcryptjs');
 const mongoose = require('../database');
 
+const product     = require('../models/ecommerce/ad-ecommerce/Product');
+const cartproduct = require('../models/ecommerce/ad-ecommerce/CartProduct'); 
+
+
 //Ctegory
 //AddCategory
 exports.addCategory = async (req, res) => {
@@ -61,13 +65,23 @@ exports.editCategory = async (req, res) => {
 
 exports.deleteCategory = async (req, res) => {
     try {
+
+         const {ObjectId} = require('mongodb');
+
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-            return res.status(404).json({ msg: 'La Categoria no Existe' });
+            return res.status(404).json({ success:false,  msg: 'La Categoria no Existe' });
         }
         let categorydel = await category.findById(req.params.id);
         if (!categorydel) {
-            return res.status(404).json({ msg: 'La Categoria no Existe' });
+            return res.status(404).json({ success:false , msg: 'La Categoria no Existe' });
         }
+
+        let products = await product.find({category:req.params.id});
+        if (products.length > 0) {
+            return res.status(404).json({ success:false ,  msg: 'Productos Asociados a la Categoria' });
+        
+        }
+
         await categorydel.remove();
         res.json({ msg: 'El categoria fue eliminada correctamente.', success: true });
     } catch (error) {
