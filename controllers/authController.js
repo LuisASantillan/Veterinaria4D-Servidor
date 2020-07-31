@@ -57,7 +57,7 @@ exports.users = async (req, res) => {
         let users = await user.findOne({ email });
 
         if (users) {
-            return res.status(400).json({ msg: 'El email ingresado ya esta usado.' , success:false });
+            return res.status(400).json({ msg: 'El email ingresado ya esta usado.', success: false });
         }
 
         users = new user(req.body);
@@ -91,9 +91,6 @@ exports.editusr = async (req, res) => {
     try {
 
         let users = await user.find({ email: req.body.email });
-        console.log(users[0]._id);
-        console.log(req.params.id === users[0]._id);
-        console.log(req.body.email);
         if (users.length > 0) {
             if (users[0]._id.toString() !== req.params.id) {
                 return res.status(400).json({ msg: 'Usuario ya Existe', success: false });
@@ -114,6 +111,13 @@ exports.editusr = async (req, res) => {
         } else {
             const salt = await bcryptjs.genSalt(10);
             req.body.password = await bcryptjs.hash(req.body.password, salt);
+        }
+
+        if (req.body.isadmin == false) {
+            users = await user.find({isadmin: true});
+            if (users.length == 1) {
+                return res.status(404).json({ msg: 'Un Usuario al menos debe ser admin', success: false });
+            }
         }
 
         usrmod = await user.findByIdAndUpdate(req.params.id, req.body, { new: true });
